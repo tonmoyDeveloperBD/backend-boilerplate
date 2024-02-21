@@ -10,8 +10,9 @@
 import config___app from '@/configs/app/app.config';
 import config___db from '@/configs/db/db.config';
 import config___loggly from '@/configs/loggly/loggly.config';
-
+import mailConfig from '@/configs/mail/mail.config';
+import paymentConfig from '@/configs/payment/payment.config';
 /**
  * Register the configuration services.
  */
-export default [config___app, config___db, config___loggly];
+export default [config___app, config___db, config___loggly, mailConfig, paymentConfig];

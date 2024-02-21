@@ -1,13 +1,33 @@
-import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
-import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
-// import { CacheService_ } from '@/core/cache/cache.service';
+import { Controller, Get } from '@nestjs/common';
+import { MessageBrokerRequest } from '@/core/message-broker/request/message-broker.request';
+import { PrismaService } from '@/core/database/prisma.service';
 
 @Controller()
 export class AppController {
-  constructor() {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly messageBrokerRequest: MessageBrokerRequest,
+  ) {}
   @Get('test')
-  async test(@Param('name000') name: string) {
-    //await this.cacheService.delete('ABCDE');
+  async test() {
+    // await this.messageBrokerRequest.callSendMailWithTemplate({
+    //   to: 'tonmoypersonal@gmail.com',
+    //   subject: 'hi',
+    //   template: PugTemplateEnum.WELCOME,
+    //   context: { name: 'Tonmoy' },
+    // });
     return 'HELLO My Boy';
+  }
+
+  @Get('t')
+  async t() {
+    await this.prismaService.user.create({
+      data: {
+        email: 'tonmoy.developer.bd@gmail.com',
+        name: 'tonmoy',
+      },
+    });
+    let result = await this.prismaService.user.findMany();
+    return result;
   }
 }

@@ -39,7 +39,7 @@ export class GraphQLCacheInterceptor extends CacheInterceptor {
 
       // If cache miss, proceed with the request
       const response = await lastValueFrom(next.handle());
-      await this.cacheManager.set(cacheKey, cacheValue);
+      await this.cacheManager.set(cacheKey, response ? response : cacheValue, { ttl: 1000 } as any);
 
       return new Observable((observer) => {
         observer.next(response);

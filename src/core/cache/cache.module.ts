@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { CacheModule } from '@nestjs/cache-manager';
 import { CacheService_ } from '@/core/cache/cache.service';
 import { RedisOptions } from '@/core/cache/cache.option';
 import { APP_INTERCEPTOR } from '@nestjs/core';

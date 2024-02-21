@@ -10,6 +10,11 @@ import { FooResolver } from '@/graphql/foo.resolver';
 import { CacheModule_ } from '@/core/cache/cache.module';
 import { AppController } from '@/app.controller';
 import { CacheService_ } from '@/core/cache/cache.service';
+import { MailModule } from '@/core/mail/mail.module';
+import { MailService } from '@/core/mail/mail.service';
+import { MessageBrokerModule } from '@/core/message-broker/message-broker.module';
+import { MessageBrokerRequest } from '@/core/message-broker/request/message-broker.request';
+import { PrismaService } from '@/core/database/prisma.service';
 
 @Module({
   imports: [
@@ -27,8 +32,18 @@ import { CacheService_ } from '@/core/cache/cache.service';
       uploads: false,
     }),
     CacheModule_,
+    MessageBrokerModule,
+    MailModule,
   ],
   controllers: [AppController],
-  providers: [FooResolver, LoggerService, LogglyService, CacheService_],
+  providers: [
+    FooResolver,
+    LoggerService,
+    LogglyService,
+    CacheService_,
+    MailService,
+    MessageBrokerRequest,
+    PrismaService,
+  ],
 })
 export class AppModule {}
