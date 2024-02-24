@@ -1,20 +1,21 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import configs from '@/configs';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerService } from '@/core/logger/logger.service';
 import { LogglyService } from '@/core/logger/loggly/loggly.service';
-import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
-import { ApolloDriver } from '@nestjs/apollo';
 import { FooResolver } from '@/graphql/foo.resolver';
 import { CacheModule_ } from '@/core/cache/cache.module';
 import { AppController } from '@/app.controller';
-import { CacheService_ } from '@/core/cache/cache.service';
 import { MailModule } from '@/core/mail/mail.module';
-import { MailService } from '@/core/mail/mail.service';
 import { MessageBrokerModule } from '@/core/message-broker/message-broker.module';
 import { MessageBrokerRequest } from '@/core/message-broker/request/message-broker.request';
 import { PrismaService } from '@/core/database/prisma.service';
+import { NotificationService } from '@/core/notification/notification.service';
+import { NotificationModule } from '@/core/notification/notification.module';
+import { FirebaseModule } from '@/shared/services/firebase-service/firebase.module';
+import { GqlModule } from '@/graphql/graphql.module';
+import { SecretKeyMiddleware } from '@/shared/middleware/secret-key.middleware';
+import { BullModule } from '@/core/job/bull-mq/bull-mq.module';
 
 @Module({
   imports: [
@@ -22,28 +23,19 @@ import { PrismaService } from '@/core/database/prisma.service';
       isGlobal: true,
       load: configs,
     }),
-    GraphQLModule.forRoot({
-      installSubscriptionHandlers: true,
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
-      path: 'api/gql',
-      context: ({ req }) => ({ req }),
-      playground: true,
-      uploads: false,
-    }),
+    GqlModule,
     CacheModule_,
     MessageBrokerModule,
     MailModule,
+    NotificationModule,
+    FirebaseModule,
+    BullModule,
   ],
   controllers: [AppController],
-  providers: [
-    FooResolver,
-    LoggerService,
-    LogglyService,
-    CacheService_,
-    MailService,
-    MessageBrokerRequest,
-    PrismaService,
-  ],
+  providers: [FooResolver, LoggerService, LogglyService, MessageBrokerRequest, PrismaService, NotificationService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(SecretKeyMiddleware).forRoutes('*');
+  }
+}

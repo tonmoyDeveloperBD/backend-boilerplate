@@ -12,7 +12,8 @@ import config___db from '@/configs/db/db.config';
 import config___loggly from '@/configs/loggly/loggly.config';
 import mailConfig from '@/configs/mail/mail.config';
 import paymentConfig from '@/configs/payment/payment.config';
+import notificationConfig from '@/configs/notification/notification.config';
 /**
  * Register the configuration services.
  */
-export default [config___app, config___db, config___loggly, mailConfig, paymentConfig];
+export default [config___app, config___db, config___loggly, mailConfig, paymentConfig, notificationConfig];
