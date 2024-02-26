@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import admin, { app, messaging, auth } from 'firebase-admin';
+import admin, { app, messaging } from 'firebase-admin';
 import { Message } from 'firebase-admin/lib/messaging/messaging-api';
 import MessagingTopicManagementResponse = messaging.MessagingTopicManagementResponse;
 
