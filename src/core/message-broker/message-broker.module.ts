@@ -6,6 +6,6 @@ import { MailService } from '@/core/mail/mail.service';
 @Module({
   imports: [EventEmitterModule.forRoot()],
   providers: [MessageBrokerService, MailService],
-  exports: [],
+  exports: [MessageBrokerService],
 })
 export class MessageBrokerModule {}

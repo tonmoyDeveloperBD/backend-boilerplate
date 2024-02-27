@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import admin, { app, messaging } from 'firebase-admin';
 import { Message } from 'firebase-admin/lib/messaging/messaging-api';
 import MessagingTopicManagementResponse = messaging.MessagingTopicManagementResponse;
+import MessagingPayload = messaging.MessagingPayload;
 
 @Injectable()
 export class FirebaseService {
@@ -14,9 +15,14 @@ export class FirebaseService {
     this.#messaging = this.firebaseApp.messaging();
   }
 
-  async sendNotificationToTopic(topic: string, payload: admin.messaging.MessagingPayload): Promise<any> {
+  async sendNotificationToTopic(topic: string, payload: MessagingPayload): Promise<any> {
     try {
-      return await this.#messaging.sendToTopic(topic, payload);
+      const result = await this.#messaging.sendToTopic(topic, {
+        data: payload.data,
+        notification: payload.notification,
+      });
+      console.log(result);
+      return result;
     } catch (e) {
       throw new Error(`Error sending notification to topic: ${e}`);
     }

@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { BullModule as Bull } from '@nestjs/bull';
-import { BullProcessor } from './bull.processor';
 import { BullService } from '@/core/job/bull-mq/bull.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { BullProcessorEnum } from '@/core/job/bull-mq/enum/bull-processor.enum';
+import { BullOrderProcessor } from '@/core/job/bull-mq/worker/bull-order.processor';
+import { BullNotificationProcessor } from '@/core/job/bull-mq/worker/bull-notification.processor';
+import { NotificationModule } from '@/core/notification/notification.module';
 
 @Module({
   imports: [
@@ -20,10 +23,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
 
     Bull.registerQueue({
-      name: 'my_queue',
+      name: BullProcessorEnum.ORDER_QUEUE,
     }),
+    Bull.registerQueue({
+      name: BullProcessorEnum.NOTIFICATION_QUEUE,
+    }),
+    NotificationModule,
   ],
-  providers: [BullProcessor, BullService],
+  providers: [BullOrderProcessor, BullNotificationProcessor, BullService],
   exports: [BullService],
 })
 export class BullModule {}

@@ -15,7 +15,7 @@ import { NotificationModule } from '@/core/notification/notification.module';
 import { FirebaseModule } from '@/shared/services/firebase-service/firebase.module';
 import { GqlModule } from '@/graphql/graphql.module';
 import { SecretKeyMiddleware } from '@/shared/middleware/secret-key.middleware';
-import { BullModule } from '@/core/job/bull-mq/bull-mq.module';
+import { BullModule } from '@/core/job/bull-mq/bull.module';
 
 @Module({
   imports: [

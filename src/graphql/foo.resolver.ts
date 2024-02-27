@@ -40,10 +40,11 @@ export class FooResolver {
   //
   @Query(() => String, { name: 'hi2' })
   async sayHello2(@Args('test_name') name: string): Promise<string> {
-    await this.bullService.addJobToQueue({
-      message: 'HI',
-      notification: 'tst',
-    });
+    // await this.bullService.orderProcess({
+    //   message: 'HI',
+    //   notification: 'tst',
+    // });
+    await this.bullService.notificationSendProcess('all', {});
     return `Hello ${name}`;
   }
   @Query(() => String, { name: 'hi' })
