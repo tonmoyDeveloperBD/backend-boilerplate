@@ -6,6 +6,7 @@ import { BullProcessorEnum } from '@/core/job/bull-mq/enum/bull-processor.enum';
 import { BullOrderProcessor } from '@/core/job/bull-mq/worker/bull-order.processor';
 import { BullNotificationProcessor } from '@/core/job/bull-mq/worker/bull-notification.processor';
 import { NotificationModule } from '@/core/notification/notification.module';
+import { OrderListener } from '@/core/job/bull-mq/listener/order.listener';
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { NotificationModule } from '@/core/notification/notification.module';
     }),
     NotificationModule,
   ],
-  providers: [BullOrderProcessor, BullNotificationProcessor, BullService],
+  providers: [BullOrderProcessor, BullNotificationProcessor, BullService, OrderListener],
   exports: [BullService],
 })
 export class BullModule {}

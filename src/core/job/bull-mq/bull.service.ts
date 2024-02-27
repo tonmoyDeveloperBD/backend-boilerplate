@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
 import { BullProcessorEnum } from '@/core/job/bull-mq/enum/bull-processor.enum';
-import { BullRetryAttemptsOption } from '@/core/job/bull-mq/bull-retry-attempts.option';
+import { BullRetryAttemptsOption } from '@/core/job/bull-mq/option/bull-retry-attempts.option';
 import { BullProcessEnum } from '@/core/job/bull-mq/enum/bull-process.enum';
 import { messaging } from 'firebase-admin';
 import MessagingPayload = messaging.MessagingPayload;
@@ -15,7 +15,7 @@ export class BullService {
   ) {}
 
   async orderProcess(data: any): Promise<void> {
-    await this.orderQueue.add(BullProcessEnum.MAIL_SEND, data, new BullRetryAttemptsOption(3, 4));
+    await this.orderQueue.add(BullProcessEnum.MAIL_SEND, data);
   }
 
   async notificationSendProcess(topic: string, payload: MessagingPayload): Promise<void> {

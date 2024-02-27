@@ -1,9 +1,10 @@
 // bull.processor.ts
 
-import { Process, Processor } from '@nestjs/bull';
+import { OnQueueActive, OnQueueFailed, Process, Processor } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { BullProcessorEnum } from '@/core/job/bull-mq/enum/bull-processor.enum';
 import { BullProcessEnum } from '@/core/job/bull-mq/enum/bull-process.enum';
+import { Job } from 'bull';
 
 @Processor(BullProcessorEnum.ORDER_QUEUE)
 export class BullOrderProcessor {
@@ -17,18 +18,24 @@ export class BullOrderProcessor {
   // - Notifying the warehouse about the new order
   // - Logging the order details
 
-  @Process(BullProcessEnum.MAIL_SEND)
+  @Process({
+    name: BullProcessEnum.MAIL_SEND,
+  })
   async orderMailJob(job: any) {
     //this.logger.debug('Processing job ' + JSON.stringify(job.data));
     try {
       // Simulate a payment failure
-      throw new Error('Payment failed: Insufficient funds');
+      //console.log('ok');
+      //throw new Error('Payment failed: Insufficient funds');
     } catch (error) {
       // Log the error
-      console.error('Payment processing failed:', error.message);
+      // console.error('Payment processing failed:', error.message);
 
       // Retry the job
       throw error;
     }
   }
+
+  // @OnQueueActive()
+  // async onQueueActive()
 }
