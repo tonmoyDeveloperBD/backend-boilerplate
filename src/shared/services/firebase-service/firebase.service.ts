@@ -17,12 +17,7 @@ export class FirebaseService {
 
   async sendNotificationToTopic(topic: string, payload: MessagingPayload): Promise<any> {
     try {
-      const result = await this.#messaging.sendToTopic(topic, {
-        data: payload.data,
-        notification: payload.notification,
-      });
-      console.log(result);
-      return result;
+      return await this.#messaging.sendToTopic(topic, payload);
     } catch (e) {
       throw new Error(`Error sending notification to topic: ${e}`);
     }

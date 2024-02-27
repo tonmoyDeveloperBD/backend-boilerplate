@@ -44,7 +44,6 @@ export class FooResolver {
     //   message: 'HI',
     //   notification: 'tst',
     // });
-    await this.bullService.notificationSendProcess('all', {});
     return `Hello ${name}`;
   }
   @Query(() => String, { name: 'hi' })
