@@ -38,16 +38,31 @@ export class FooResolver {
   //   return SuccessResponse.create(array, 200, 'SUCCESS');
   // }
   //
+  //
   @Query(() => String, { name: 'hi2' })
   async sayHello2(@Args('test_name') name: string): Promise<string> {
-    await this.bullService.orderProcess({
-      message: 'HI',
-      notification: 'tst',
+    //await this.bullService.notificationSendToTopicProcess('test', { data: { title: 'test 123' } });
+    await this.bullService.notificationSend({
+      topic: 'dsfdsf',
+      notification: {
+        title: 'hello',
+        body: 'dsvds',
+      },
     });
+    // await this.bullService.orderProcess({
+    //   message: 'HI',
+    //   notification: 'tst',
+    // });
     return `Hello ${name}`;
   }
   @Query(() => String, { name: 'hi' })
   async test(): Promise<string> {
+    return `Hello`;
+  }
+
+  @Query(() => String, { name: 'test' })
+  async delete(): Promise<string> {
+    //await this.bullService.completedTaskDelete();
     return `Hello`;
   }
 }

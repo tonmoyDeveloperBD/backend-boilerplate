@@ -1,4 +1,5 @@
 export enum BullProcessorEnum {
+  ROOT_QUEUE = 'rootQueue',
   ORDER_QUEUE = 'orderQueue',
   NOTIFICATION_QUEUE = 'notificationQueue',
   OTP_QUEUE = 'otpQueue',

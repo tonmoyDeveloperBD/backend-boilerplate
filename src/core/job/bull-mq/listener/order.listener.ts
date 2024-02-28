@@ -8,21 +8,22 @@ import { BullProcessorEnum } from '@/core/job/bull-mq/enum/bull-processor.enum';
 export class OrderListener {
   constructor() {}
 
-  @OnQueueFailed({ name: BullProcessEnum.MAIL_SEND })
+  @OnQueueFailed({ name: BullProcessEnum.ORDER_PROCESS })
   async onMailSendFailed(job: Job, error: Error) {
-    console.log('Mail send job failed:', job.id, error.message);
+    console.log(job.id, error.message);
     // Handle the failure, log it, or perform other actions
   }
 
-  @OnQueueError({ name: BullProcessEnum.MAIL_SEND })
+  @OnQueueError({ name: BullProcessEnum.ORDER_PROCESS })
   async onMailSendError(error: Error) {
-    console.log('Mail send queue error:', error.message);
+    console.log(error.message);
     // Handle the queue error, log it, or perform other actions
   }
 
-  @OnQueueCompleted({ name: BullProcessEnum.MAIL_SEND })
+  @OnQueueCompleted({ name: BullProcessEnum.ORDER_PROCESS })
   async onMailSendCompleted(job: Job) {
-    console.log('Mail send job completed:', job.id);
+    console.log(job.id);
     // Handle the completion, log it, or perform other actions
+    //await job.remove();
   }
 }

@@ -7,6 +7,7 @@ import { BullOrderProcessor } from '@/core/job/bull-mq/worker/bull-order.process
 import { BullNotificationProcessor } from '@/core/job/bull-mq/worker/bull-notification.processor';
 import { NotificationModule } from '@/core/notification/notification.module';
 import { OrderListener } from '@/core/job/bull-mq/listener/order.listener';
+import { MessageBrokerCaller } from '@/core/message-broker/message-broker.caller';
 
 @Module({
   imports: [
@@ -29,9 +30,21 @@ import { OrderListener } from '@/core/job/bull-mq/listener/order.listener';
     Bull.registerQueue({
       name: BullProcessorEnum.NOTIFICATION_QUEUE,
     }),
+    Bull.registerQueue({
+      name: BullProcessorEnum.OTP_QUEUE,
+    }),
+    Bull.registerQueue({
+      name: BullProcessorEnum.EMAIL_QUEUE,
+    }),
+    Bull.registerQueue({
+      name: BullProcessorEnum.PAYMENT_QUEUE,
+    }),
+    Bull.registerQueue({
+      name: BullProcessorEnum.FILE_UPLOAD_QUEUE,
+    }),
     NotificationModule,
   ],
-  providers: [BullOrderProcessor, BullNotificationProcessor, BullService, OrderListener],
+  providers: [BullOrderProcessor, BullNotificationProcessor, BullService, OrderListener, MessageBrokerCaller],
   exports: [BullService],
 })
 export class BullModule {}

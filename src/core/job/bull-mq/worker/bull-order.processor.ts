@@ -1,10 +1,7 @@
-// bull.processor.ts
-
-import { OnQueueActive, OnQueueFailed, Process, Processor } from '@nestjs/bull';
+import { Process, Processor } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { BullProcessorEnum } from '@/core/job/bull-mq/enum/bull-processor.enum';
 import { BullProcessEnum } from '@/core/job/bull-mq/enum/bull-process.enum';
-import { Job } from 'bull';
 
 @Processor(BullProcessorEnum.ORDER_QUEUE)
 export class BullOrderProcessor {
@@ -19,9 +16,9 @@ export class BullOrderProcessor {
   // - Logging the order details
 
   @Process({
-    name: BullProcessEnum.MAIL_SEND,
+    name: BullProcessEnum.ORDER_PROCESS,
   })
-  async orderMailJob(job: any) {
+  async orderProcessJob(job: any) {
     //this.logger.debug('Processing job ' + JSON.stringify(job.data));
     try {
       // Simulate a payment failure

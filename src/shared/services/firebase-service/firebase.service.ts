@@ -24,8 +24,11 @@ export class FirebaseService {
   }
 
   async sendNotification(message: Message) {
+    console.log(message);
     try {
-      return await this.#messaging.send(message);
+      const resulr = await this.#messaging.send(message);
+      console.log('::::', resulr);
+      return resulr;
     } catch (e) {
       throw new Error(`Error sending notification to topic: ${e}`);
     }

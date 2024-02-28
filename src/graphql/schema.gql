@@ -5,4 +5,5 @@
 type Query {
   hi2(test_name: String!): String!
   hi: String!
+  test: String!
 }
