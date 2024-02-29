@@ -19,7 +19,11 @@ export class BullService {
     await this.orderQueue.add(BullProcessEnum.ORDER_PROCESS, data);
   }
 
-  async notificationSendToTopicProcess(topic: string, payload: MessagingPayload): Promise<void> {
+  async notificationSend(message: Message): Promise<any> {
+    await this.notificationQueue.add(BullNotificationProcessEnum.NOTIFICATION_SEND, message);
+  }
+
+  async notificationSendToTopic(topic: string, payload: MessagingPayload): Promise<void> {
     await this.notificationQueue.add(
       BullNotificationProcessEnum.NOTIFICATION_SEND_TO_TOPIC,
       { topic, payload },
@@ -27,7 +31,19 @@ export class BullService {
     );
   }
 
-  async notificationSend(message: Message): Promise<any> {
-    await this.notificationQueue.add(BullNotificationProcessEnum.NOTIFICATION_SEND, message);
+  async notificationSubscribeToTopic(topic: string, registrationTokens: string | string[]): Promise<any> {
+    await this.notificationQueue.add(
+      BullNotificationProcessEnum.NOTIFICATION_SUBSCRIBE_TO_TOPIC,
+      { topic, registrationTokens },
+      new BullRetryAttemptsOption(2, 10),
+    );
+  }
+
+  async notificationUnsubscribeToTopic(topic: string, registrationTokens: string | string[]): Promise<any> {
+    await this.notificationQueue.add(
+      BullNotificationProcessEnum.NOTIFICATION_UNSUBSCRIBE_TO_TOPIC,
+      { topic, registrationTokens },
+      new BullRetryAttemptsOption(2, 10),
+    );
   }
 }

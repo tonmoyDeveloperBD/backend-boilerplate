@@ -21,4 +21,12 @@ export class MessageBrokerCaller {
   async sendNotification(message: Message): Promise<any> {
     this.eventEmitter.emit(MessageBrokerChannel.SEND_NOTIFICATION, message);
   }
+
+  async subscribeToTopic(registrationTokens: string | string[], topic: string): Promise<any> {
+    this.eventEmitter.emit(MessageBrokerChannel.SUBSCRIBE_TO_TOPIC, registrationTokens, topic);
+  }
+
+  async unsubscribeToTopic(registrationTokens: string | string[], topic: string): Promise<any> {
+    this.eventEmitter.emit(MessageBrokerChannel.UNSUBSCRIBE_TO_TOPIC, registrationTokens, topic);
+  }
 }

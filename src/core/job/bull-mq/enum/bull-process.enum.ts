@@ -8,6 +8,6 @@ export enum BullProcessEnum {
 export enum BullNotificationProcessEnum {
   NOTIFICATION_SEND_TO_TOPIC = 'notificationSendToTopic',
   NOTIFICATION_SEND = 'notificationSend',
-  NOTIFICATION_SUBSCIBE_TOPIC = 'notificationSubscribeTopic',
-  NOTIFICATION_UNSUBSCIBE_TOPIC = 'notificationUnsubscribeTopic',
+  NOTIFICATION_SUBSCRIBE_TO_TOPIC = 'notificationSubscribeTopic',
+  NOTIFICATION_UNSUBSCRIBE_TO_TOPIC = 'notificationUnsubscribeTopic',
 }
