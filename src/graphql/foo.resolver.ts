@@ -3,12 +3,14 @@ import { NotificationService } from '@/core/notification/notification.service';
 import { BullService } from '@/core/job/bull-mq/bull.service';
 import { DisableCache } from '@/core/decorators/disable-cache.decorator';
 import { DeleteCache } from '@/core/decorators/delete-cache.decorator';
+import { PrismaService } from '@/core/database/prisma.service';
 
 @Resolver()
 export class FooResolver {
   constructor(
     private readonly notificationService: NotificationService,
     private readonly bullService: BullService,
+    private readonly prismaService: PrismaService,
   ) {}
   // @Query(() => Object, { name: 'hi' })
   // @DisableCache()
@@ -43,6 +45,14 @@ export class FooResolver {
   //
   @Query(() => String, { name: 'hi2' })
   async sayHello2(@Args('test_name') name: string): Promise<string> {
+    // await this.prismaService.user.create({
+    //   data: {
+    //     connect: {
+    //       wallet: {},
+    //     },
+    //   },
+    // });
+
     //await this.bullService.notificationSendToTopic('01708033091', { notification: { title: 'test 123' } });
     // await this.bullService.notificationSend({
     //   topic: 'dsfdsf',
