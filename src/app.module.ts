@@ -16,6 +16,7 @@ import { FirebaseModule } from '@/shared/services/firebase-service/firebase.modu
 import { GqlModule } from '@/graphql/graphql.module';
 import { SecretKeyMiddleware } from '@/shared/middleware/secret-key.middleware';
 import { BullModule } from '@/core/job/bull-mq/bull.module';
+import { CommonModule } from '@/shared/common/common.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { BullModule } from '@/core/job/bull-mq/bull.module';
     NotificationModule,
     FirebaseModule,
     BullModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [FooResolver, LoggerService, LogglyService, MessageBrokerRequest, PrismaService, NotificationService],
